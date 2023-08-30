@@ -1,0 +1,17 @@
+---
+- name: update index.html files
+  hosts: webservers
+  remote_user: root
+  tasks:
+  - name: update html file  
+    ansible.builtin.lineinfile:
+      path: /usr/share/nginx/html/index.html 
+      regexp: '^<h1>Hello World</h1>'
+      line: '<h1>Hello World from ansible</h1>'
+      owner: root
+      group: root
+      mode: '0644'
+  - name: restart nginx server  
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
